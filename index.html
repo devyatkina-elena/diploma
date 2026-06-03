@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>БиоКвест | Подготовка к ЕГЭ по биологии</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #10b981;
+            --accent-dark: #059669;
+            --accent-glow: rgba(16, 185, 129, 0.25);
+            --surface: #ffffff;
+            --surface-muted: #f8fafc;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+            --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+            --shadow-lg: 0 20px 40px rgba(15, 23, 42, 0.12);
+            --radius-lg: 1.25rem;
+            --radius-xl: 1.75rem;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #eef2f7 0%, #f8fafc 40%, #f0f4f8 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        body.dark {
+            --surface: #1e293b;
+            --surface-muted: #0f172a;
+            --border: #334155;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(180deg, #0b1120 0%, #0f172a 50%, #0b1120 100%);
+        }
+        body.dark .card, body.dark .tab-content, body.dark .mindmap-container, body.dark .hero-banner {
+            background: var(--surface);
+            border-color: var(--border);
+        }
+        body.dark .tab-nav {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: var(--border);
+        }
+        body.dark .tab-nav button {
+            color: var(--text-muted);
+        }
+        body.dark .tab-nav button:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        body.dark .tab-nav button.active {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+        body.dark .resource-link {
+            color: #cbd5e1;
+            background: rgba(15, 23, 42, 0.5);
+        }
+        body.dark .resource-link:hover {
+            background: rgba(16, 185, 129, 0.12);
+        }
+        body.dark .card-header {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), transparent);
+        }
+        body.dark .footer {
+            background: #0b1120;
+            border-color: var(--border);
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .header {
+            background: linear-gradient(135deg, #0a1f2e 0%, #0f2b3d 40%, #1b4a3b 100%);
+            color: white;
+            padding: 2.5rem 0 3rem;
+            text-align: center;
+            border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(52, 211, 153, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+        }
+        .header .container {
+            position: relative;
+            z-index: 1;
+        }
+        .header h1 {
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .header h1 i {
+            color: #6ee7b7;
+            margin-right: 0.3rem;
+        }
+        .header p {
+            opacity: 0.85;
+            margin-top: 0.6rem;
+            font-size: 1.05rem;
+        }
+        #themeToggle {
+            margin-top: 1.2rem;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.2s;
+        }
+        #themeToggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.03);
+        }
+        .tab-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.4rem;
+            margin-bottom: 2.5rem;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 3rem;
+            padding: 0.45rem;
+            box-shadow: var(--shadow-md);
+        }
+        .tab-nav button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            color: var(--text-muted);
+        }
+        .tab-nav button:hover:not(.active) {
+            background: var(--surface-muted);
+            color: var(--text);
+        }
+        .tab-nav button.active {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+        .tab-content {
+            display: none;
+            animation: fadeUp 0.35s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-banner {
+            background: linear-gradient(135deg, #0f2b3d 0%, #1b4a3b 60%, #14532d 100%);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(110, 231, 183, 0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-banner h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+        .hero-banner p {
+            opacity: 0.9;
+            max-width: 680px;
+            position: relative;
+            line-height: 1.7;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2rem 0 1.25rem;
+            padding-left: 1rem;
+            border-left: 4px solid var(--accent);
+            letter-spacing: -0.01em;
+        }
+        .grid-2col, .grid-3col {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .grade-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .grade-grid .card {
+            height: 100%;
+        }
+        .card-topic {
+            padding: 0.65rem 1.35rem 0;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.01em;
+        }
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #34d399, #6ee7b7);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card-header {
+            padding: 1.15rem 1.35rem;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.06), transparent);
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            letter-spacing: -0.01em;
+        }
+        .card-header .card-icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 0.65rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px var(--accent-glow);
+        }
+        .card-body {
+            padding: 1.25rem 1.35rem 1.35rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .resource-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+        .resource-group h4 {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            margin-bottom: 0.15rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 2rem;
+            width: fit-content;
+        }
+        .resource-group h4.type-theory { background: rgba(59, 130, 246, 0.1); color: #2563eb; }
+        .resource-group h4.type-interactive { background: rgba(168, 85, 247, 0.1); color: #9333ea; }
+        .resource-group h4.type-video { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
+        .resource-group h4.type-test { background: rgba(16, 185, 129, 0.12); color: var(--accent-dark); }
+        body.dark .resource-group h4.type-theory { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        body.dark .resource-group h4.type-interactive { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+        body.dark .resource-group h4.type-video { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+        body.dark .resource-group h4.type-test { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
+        .resource-link {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            text-decoration: none;
+            color: var(--text);
+            padding: 0.55rem 0.85rem;
+            border-radius: 0.65rem;
+            font-size: 0.88rem;
+            background: var(--surface-muted);
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .resource-link:last-child {
+            margin-bottom: 0;
+        }
+        .resource-link:hover {
+            background: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.25);
+            color: var(--accent-dark);
+            transform: translateX(4px);
+        }
+        .resource-link i {
+            width: 1.25rem;
+            text-align: center;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        .resource-link .link-arrow {
+            margin-left: auto;
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: all 0.2s ease;
+            color: var(--accent);
+            font-size: 0.75rem;
+        }
+        .resource-link:hover .link-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .card-featured {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .card-featured .card-body {
+            flex: 1;
+            justify-content: space-between;
+        }
+        .card-featured .featured-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .btn-go {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.25rem;
+            border-radius: 0.75rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px var(--accent-glow);
+        }
+        .btn-go:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+        .card-simple .card-header .card-icon {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+        .mindmap-container {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            margin: 2rem 0;
+            box-shadow: var(--shadow-md);
+        }
+        .mindmap-container h2 {
+            margin-bottom: 0.5rem;
+        }
+        .mindmap-container h2 i {
+            color: var(--accent);
+        }
+        .mindmap-iframe {
+            width: 100%;
+            max-width: 100%;
+            height: 496px;
+            border: none;
+            border-radius: var(--radius-lg);
+            background: var(--surface-muted);
+            box-shadow: var(--shadow-sm);
+        }
+        .footer {
+            background: rgba(241, 245, 249, 0.8);
+            backdrop-filter: blur(8px);
+            text-align: center;
+            padding: 2.5rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .footer .author {
+            margin-top: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .tab-nav button { padding: 0.55rem 1rem; font-size: 0.82rem; }
+            .hero-banner { padding: 1.75rem; }
+            .mindmap-iframe { height: 360px; }
+            .grid-2col, .grid-3col {
+                grid-template-columns: 1fr;
+            }
+            .grade-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="container">
+        <h1><i class="fas fa-dna"></i> БиоКвест | ЕГЭ-подготовка</h1>
+        <p>Теория • Интерактив • Видео • Тесты • Интеллект-карты</p>
+        <button id="themeToggle"><i class="fas fa-moon"></i> Тёмная тема</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="tab-nav" id="tabNav">
+        <button data-tab="home" class="active">🏠 Главная</button>
+        <button data-tab="grade10">📗 10 класс</button>
+        <button data-tab="grade11">📕 11 класс</button>
+        <button data-tab="materials">📚 Материалы</button>
+        <button data-tab="mindmap">🧠 Интеллект-карта</button>
+    </div>
+
+    <!-- ГЛАВНАЯ -->
+    <div id="home" class="tab-content active">
+        <div class="hero-banner">
+            <h2>🎯 Добро пожаловать на БиоКвест!</h2>
+            <p>Комплексная подготовка к ЕГЭ по биологии с использованием лучших ЦОР: теория, интерактивные симуляции, видеоуроки и тесты.</p>
+        </div>
+        <div class="section-title">⭐ Рекомендуемые ресурсы</div>
+        <div class="grid-2col" id="featured"></div>
+    </div>
+
+    <!-- 10 КЛАСС -->
+    <div id="grade10" class="tab-content">
+        <div class="grade-grid" id="grade10Grid"></div>
+    </div>
+
+    <!-- 11 КЛАСС -->
+    <div id="grade11" class="tab-content">
+        <div class="grade-grid" id="grade11Grid"></div>
+    </div>
+
+    <!-- МАТЕРИАЛЫ (каталог по темам) -->
+    <div id="materials" class="tab-content">
+        <div class="section-title">📖 Теоретические материалы</div>
+        <div class="grid-3col" id="matTheory"></div>
+        <div class="section-title">🧪 Интерактивные тренажёры и лаборатории</div>
+        <div class="grid-3col" id="matInteractive"></div>
+        <div class="section-title">🎥 Видеоуроки и анимации</div>
+        <div class="grid-3col" id="matVideo"></div>
+        <div class="section-title">📝 Тесты и диагностика</div>
+        <div class="grid-3col" id="matTests"></div>
+        <div class="section-title">📚 Справочные материалы</div>
+        <div class="grid-3col" id="matReference"></div>
+    </div>
+
+    <!-- ИНТЕЛЛЕКТ-КАРТА: встроен Miro -->
+    <div id="mindmap" class="tab-content">
+        <div class="mindmap-container">
+            <h2><i class="fas fa-brain"></i> Интерактивная интеллект-карта (Miro)</h2>
+            <p>Используйте карту для структурирования знаний по биологии. Можно масштабировать и перемещать.</p>
+            <iframe class="mindmap-iframe" src="https://miro.com/app/live-embed/uXjVL9rPvzI=/?focusWidget=3458764608883554981&embedMode=view_only_without_ui&embedId=339331751008" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
+            <div style="margin-top:1rem;">
+                <a href="https://miro.com/app/board/uXjVL9rPvzI=/" target="_blank" class="resource-link" style="justify-content:center;"><i class="fas fa-external-link-alt"></i> Открыть карту в полноэкранном режиме</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>Все ЦОР бесплатны. Источники: ФИПИ, Решу ЕГЭ, Инфоурок, ЯКласс, Облако знаний, PhET, Labster, BioDigital Human, Незнайка, Вебиум, ИнтернетУрок, Биомолекула, Копилка уроков, Мультиурок, NeoFamily, NH 3D, CRISPR-3D.</p>
+    <p class="author">Создала Девяткина Елена Вячеславовна</p>
+</div>
+
+<script>
+    // Функция создания карточки с группировкой по типам
+    function resourceLink(l, icon) {
+        return `<a href="${l.url}" target="_blank" rel="noopener" class="resource-link"><i class="fas fa-${icon}"></i> ${l.name}<span class="link-arrow"><i class="fas fa-arrow-right"></i></span></a>`;
+    }
+
+    function createCard(title, items, topicLabel) {
+        return `
+            <div class="card">
+                ${topicLabel ? `<div class="card-topic">${topicLabel}</div>` : ''}
+                <div class="card-header">
+                    <span class="card-icon"><i class="fas fa-leaf"></i></span>
+                    ${title}
+                </div>
+                <div class="card-body">
+                    ${items.theory ? `<div class="resource-group"><h4 class="type-theory"><i class="fas fa-book"></i> Теория</h4>${items.theory.map(l => resourceLink(l, 'file-alt')).join('')}</div>` : ''}
+                    ${items.interactive ? `<div class="resource-group"><h4 class="type-interactive"><i class="fas fa-microchip"></i> Интерактив</h4>${items.interactive.map(l => resourceLink(l, 'cube')).join('')}</div>` : ''}
+                    ${items.video ? `<div class="resource-group"><h4 class="type-video"><i class="fas fa-play-circle"></i> Видео</h4>${items.video.map(l => resourceLink(l, 'video')).join('')}</div>` : ''}
+                    ${items.test ? `<div class="resource-group"><h4 class="type-test"><i class="fas fa-check-circle"></i> Тесты</h4>${items.test.map(l => resourceLink(l, 'tasks')).join('')}</div>` : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    function renderGradeGrid(data, sections, containerId) {
+        document.getElementById(containerId).innerHTML = sections.map(({ key, label }) => {
+            const topic = data[key];
+            return createCard(topic.title, topic, label);
+        }).join('');
+    }
+
+    // БАЗА ДАННЫХ — все ссылки ведут на конкретные материалы
+    const grade10Data = {
+        cytology: {
+            title: "Цитология",
+            theory: [
+                { name: "Строение клетки (ФИПИ)", url: "https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege" },
+                { name: "Конспект: Клеточная теория (Решу ЕГЭ)", url: "https://ege.sdamgia.ru/" },
+                { name: "Органоиды клетки (Инфоурок)", url: "https://infourok.ru/" }
+            ],
+            interactive: [
+                { name: "PhET: Строение клетки (3D)", url: "https://phet.colorado.edu/ru/simulations/cell-structure" },
+                { name: "BioDigital Human: 3D-клетка", url: "https://www.biodigital.com/" }
+            ],
+            video: [
+                { name: "ИнтернетУрок: Строение клетки", url: "https://interneturok.ru/lesson/biology/10-klass/bhimicheskaya-organizaciyakletki" }
+            ],
+            test: [
+                { name: "ЯКласс: Тест по цитологии", url: "https://www.yaklass.ru/" },
+                { name: "Незнайка: Тесты ЕГЭ по клетке", url: "https://neznaika.pro/" }
+            ]
+        },
+        biochem: {
+            title: "Биохимия",
+            theory: [
+                { name: "Белки и ферменты (Облако знаний)", url: "https://oblakoz.ru/" },
+                { name: "Химический состав клетки (Мультиурок)", url: "https://multiurok.ru/" }
+            ],
+            interactive: [
+                { name: "PhET: Мембранные каналы", url: "https://phet.colorado.edu/ru/simulations/membrane-channels" },
+                { name: "Labster: Ферменты (демо)", url: "https://www.labster.com/simulations" }
+            ],
+            video: [
+                { name: "Биохимия ЕГЭ (YouTube)", url: "https://www.youtube.com/results?search_query=%D0%B1%D0%B8%D0%BE%D1%85%D0%B8%D0%BC%D0%B8%D1%8F+%D0%95%D0%93%D0%AD" }
+            ],
+            test: [
+                { name: "Решу ЕГЭ: Биохимия", url: "https://ege.sdamgia.ru/" }
+            ]
+        },
+        botany: {
+            title: "Ботаника",
+            theory: [
+                { name: "Строение растений (Копилка уроков)", url: "https://kopilkaurokov.ru/" }
+            ],
+            interactive: [
+                { name: "PhET: Фотосинтез", url: "https://phet.colorado.edu/ru/simulations/photosynthesis" }
+            ],
+            video: [
+                { name: "Видеоурок: Ткани растений", url: "https://interneturok.ru/lesson/biology/6-klass" }
+            ],
+            test: [
+                { name: "ЯКласс: Тест по ботанике", url: "https://www.yaklass.ru/" }
+            ]
+        },
+        zoology: {
+            title: "Зоология",
+            theory: [
+                { name: "Тип Членистоногие (Инфоурок)", url: "https://infourok.ru/" }
+            ],
+            interactive: [
+                { name: "NH 3D: Модели беспозвоночных", url: "https://www.nh3d.com/" },
+                { name: "Arthropods 3D", url: "https://www.arthropods.org/3d-models" }
+            ],
+            video: [
+                { name: "Биология с нуля: Зоология", url: "https://www.youtube.com/c/BiologyFromScratch" }
+            ],
+            test: [
+                { name: "Решу ЕГЭ: Зоология", url: "https://ege.sdamgia.ru/" }
+            ]
+        }
+    };
+
+    const grade11Data = {
+        genetics: {
+            title: "Генетика",
+            theory: [
+                { name: "Законы Менделя (Облако знаний)", url: "https://oblakoz.ru/" },
+                { name: "Генетика пола (4ЕГЭ)", url: "https://4ege.ru/" }
+            ],
+            interactive: [
+                { name: "CRISPR-3D: Модель ДНК", url: "https://www.crispr-3d.com/" },
+                { name: "PhET: Gene Machine", url: "https://phet.colorado.edu/ru/simulations/gene-machine-the-lac-operon" }
+            ],
+            video: [
+                { name: "Вебиум: Генетика ЕГЭ", url: "https://webium.ru/webinars/biologiya/" }
+            ],
+            test: [
+                { name: "Незнайка: Генетика", url: "https://neznaika.pro/ege/biologiya/" },
+                { name: "NeoFamily: Тренажёр ЕГЭ", url: "https://neofamily.ru/" }
+            ]
+        },
+        anatomy: {
+            title: "Анатомия",
+            theory: [
+                { name: "Анатомия человека (Копилка уроков)", url: "https://kopilkaurokov.ru/" }
+            ],
+            interactive: [
+                { name: "BioDigital Human: 3D-атлас", url: "https://www.biodigital.com/" },
+                { name: "NH 3D: Анатомические модели", url: "https://www.nh3d.com/" }
+            ],
+            video: [
+                { name: "ИнтернетУрок: Анатомия", url: "https://interneturok.ru/lesson/biology/8-klass" }
+            ],
+            test: [
+                { name: "Решу ЕГЭ: Анатомия", url: "https://ege.sdamgia.ru/" }
+            ]
+        },
+        evolution: {
+            title: "Эволюция",
+            theory: [
+                { name: "Эволюционное учение (4ЕГЭ)", url: "https://4ege.ru/" },
+                { name: "Биомолекула: Эволюция", url: "https://biomolecula.ru/" }
+            ],
+            interactive: [
+                { name: "PhET: Естественный отбор", url: "https://phet.colorado.edu/ru/simulations/natural-selection" },
+                { name: "CyberBiology: Эволюционные модели", url: "https://cyberbiology.com/" }
+            ],
+            video: [
+                { name: "YouTube: Эволюция за 20 минут", url: "https://www.youtube.com/results?search_query=%D1%8D%D0%B2%D0%BE%D0%BB%D1%8E%D1%86%D0%B8%D1%8F+%D0%95%D0%93%D0%AD" }
+            ],
+            test: [
+                { name: "ЯКласс: Эволюция", url: "https://www.yaklass.ru/" }
+            ]
+        },
+        ecology: {
+            title: "Экология",
+            theory: [
+                { name: "Экосистемы (Мультиурок)", url: "https://multiurok.ru/" }
+            ],
+            interactive: [
+                { name: "Labster: Экосистемы", url: "https://www.labster.com/simulations" }
+            ],
+            video: [
+                { name: "Вебиум: Экология", url: "https://webium.ru/webinars/biologiya/" }
+            ],
+            test: [
+                { name: "Незнайка: Экология", url: "https://neznaika.pro/ege/biologiya/" }
+            ]
+        },
+        ontogenesis: {
+            title: "Размножение и онтогенез",
+            theory: [
+                { name: "Митоз и мейоз (Инфоурок)", url: "https://infourok.ru/" }
+            ],
+            interactive: [
+                { name: "PhET: Клеточное деление", url: "https://phet.colorado.edu/ru/simulations/cell-division" }
+            ],
+            video: [
+                { name: "Анимация: Эмбриогенез", url: "https://www.youtube.com/watch?v=7fZl6NOHkIQ" }
+            ],
+            test: [
+                { name: "Решу ЕГЭ: Онтогенез", url: "https://ege.sdamgia.ru/" }
+            ]
+        }
+    };
+
+    // Материалы (каталог)
+    const materials = {
+        theory: [
+            { name: "ФИПИ — Открытый банк заданий", url: "https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege" },
+            { name: "Решу ЕГЭ — Теория по биологии", url: "https://ege.sdamgia.ru/" },
+            { name: "Инфоурок — Конспекты уроков", url: "https://infourok.ru/" },
+            { name: "4ЕГЭ — Конспекты по биологии", url: "https://4ege.ru/biologiya/" },
+            { name: "Яндекс.Учебник", url: "https://education.yandex.ru/" }
+        ],
+        interactive: [
+            { name: "PhET — Биологические симуляции", url: "https://phet.colorado.edu/ru/simulations/biology" },
+            { name: "BioDigital Human — 3D-анатомия", url: "https://www.biodigital.com/" },
+            { name: "Labster — Виртуальные лаборатории", url: "https://www.labster.com/simulations" },
+            { name: "Облако знаний — Интерактивные уроки", url: "https://oblakoz.ru/" },
+            { name: "ЯКласс — Тренажёры", url: "https://www.yaklass.ru/" },
+            { name: "NeoFamily — Тренажёр ЕГЭ", url: "https://neofamily.ru/biology/training" }
+        ],
+        video: [
+            { name: "ИнтернетУрок — Видеоуроки биологии", url: "https://interneturok.ru/subject/biologiya" },
+            { name: "Вебиум — Вебинары по биологии", url: "https://webium.ru/webinars/biologiya/" },
+            { name: "YouTube — Биология с нуля", url: "https://www.youtube.com/c/BiologyFromScratch" },
+            { name: "Научпок — Научно-популярные видео", url: "https://www.youtube.com/c/Nauchpok" }
+        ],
+        tests: [
+            { name: "Незнайка — Тесты ЕГЭ", url: "https://neznaika.pro/ege/biologiya/" },
+            { name: "Решу ЕГЭ — Диагностика", url: "https://ege.sdamgia.ru/" },
+            { name: "ЯКласс — Проверочные работы", url: "https://www.yaklass.ru/" }
+        ],
+        reference: [
+            { name: "Биомолекула — Научные статьи", url: "https://biomolecula.ru/" },
+            { name: "Справочник по биологии (4ЕГЭ)", url: "https://4ege.ru/biologiya/" },
+            { name: "Копилка уроков — Методические материалы", url: "https://kopilkaurokov.ru/" }
+        ]
+    };
+
+    // Рендер всех разделов
+    const grade10Sections = [
+        { key: 'cytology', label: '🧬 Цитология (строение клетки)' },
+        { key: 'biochem', label: '⚛️ Биохимия клетки' },
+        { key: 'botany', label: '🌿 Ботаника (растения)' },
+        { key: 'zoology', label: '🦁 Зоология (беспозвоночные)' }
+    ];
+
+    const grade11Sections = [
+        { key: 'genetics', label: '🧬 Генетика (законы Менделя, Моргана)' },
+        { key: 'anatomy', label: '❤️ Анатомия человека' },
+        { key: 'evolution', label: '🔄 Эволюция' },
+        { key: 'ecology', label: '🌍 Экология' },
+        { key: 'ontogenesis', label: '🌱 Размножение и онтогенез' }
+    ];
+
+    renderGradeGrid(grade10Data, grade10Sections, 'grade10Grid');
+    renderGradeGrid(grade11Data, grade11Sections, 'grade11Grid');
+
+    function renderMaterialCard(m) {
+        return `<div class="card card-simple">
+            <div class="card-header">
+                <span class="card-icon"><i class="fas fa-bookmark"></i></span>
+                ${m.name}
+            </div>
+            <div class="card-body">
+                <a href="${m.url}" target="_blank" rel="noopener" class="btn-go"><i class="fas fa-external-link-alt"></i> Перейти к материалу</a>
+            </div>
+        </div>`;
+    }
+    document.getElementById("matTheory").innerHTML = materials.theory.map(renderMaterialCard).join("");
+    document.getElementById("matInteractive").innerHTML = materials.interactive.map(renderMaterialCard).join("");
+    document.getElementById("matVideo").innerHTML = materials.video.map(renderMaterialCard).join("");
+    document.getElementById("matTests").innerHTML = materials.tests.map(renderMaterialCard).join("");
+    document.getElementById("matReference").innerHTML = materials.reference.map(renderMaterialCard).join("");
+
+    // Рекомендуемые
+    const featured = [
+        { name: "PhET: Естественный отбор", desc: "Интерактивная симуляция эволюционных процессов", url: "https://phet.colorado.edu/ru/simulations/natural-selection", icon: "dna" },
+        { name: "BioDigital Human: 3D-анатомия", desc: "Трёхмерный атлас человеческого тела", url: "https://www.biodigital.com/", icon: "user-md" },
+        { name: "Решу ЕГЭ: Генетика", desc: "Задачи и теория для подготовки к экзамену", url: "https://ege.sdamgia.ru/", icon: "graduation-cap" }
+    ];
+    document.getElementById("featured").innerHTML = featured.map(f => `
+        <div class="card card-featured">
+            <div class="card-header">
+                <span class="card-icon"><i class="fas fa-${f.icon}"></i></span>
+                ${f.name}
+            </div>
+            <div class="card-body">
+                <p class="featured-desc">${f.desc}</p>
+                <a href="${f.url}" target="_blank" rel="noopener" class="btn-go"><i class="fas fa-external-link-alt"></i> Открыть</a>
+            </div>
+        </div>
+    `).join("");
+
+    // Переключение вкладок
+    const tabs = document.querySelectorAll(".tab-nav button");
+    const contents = document.querySelectorAll(".tab-content");
+    tabs.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const tabId = btn.dataset.tab;
+            contents.forEach(c => c.classList.remove("active"));
+            document.getElementById(tabId).classList.add("active");
+            tabs.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+        });
+    });
+
+    // Тёмная тема
+    document.getElementById("themeToggle")?.addEventListener("click", () => { document.body.classList.toggle("dark"); });
+</script>
+</body>
+</html>
